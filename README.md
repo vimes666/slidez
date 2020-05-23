@@ -23,5 +23,6 @@ The script randomizes the order of the images. Every image is showed 57 second a
 
 ### Notes:
 - if you add, remove or change images in the image folder, you will have to run slidez again to see the result in the slideshow
+- the random image order is estabished at the moment slidez runs, to get a new random order, you will have to run slidez again 
 - comments and suggestions are always appreciated
 
