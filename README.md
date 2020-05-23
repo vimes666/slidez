@@ -1,2 +1,3 @@
 # slidez
-Slideshow generator for linux mint mate desktop
+
+Slideshow generator for linux mint mate desktop backgroud.
