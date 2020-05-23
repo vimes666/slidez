@@ -18,9 +18,10 @@ The script randomizes the order of the images. Every image is showed 57 second a
 - click 'Add...'
 - select 'All files' on the pulldown button that says 'Images' (above the open button)
 - navigate to your images folder _or_ enter your images folder in the location field
-- select the file slideshow.xml and click open.
+- select the file slideshow.xml and click open
 - done
 
 ### Notes:
-- if you add, remove or change images in the image folder you will have to run slidez again
+- if you add, remove or change images in the image folder, you will have to run slidez again to see the result in the slideshow
+- comments and suggestions are always appreciated
 
