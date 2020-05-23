@@ -27,9 +27,9 @@
 $cnt = 0;
 $fileout = getcwd()."/slideshow.xml";
 
-# Make array from LS output. We do not need error msgs. 
+# Make array from 'find' output. We do not need error msgs. 
 exec("find ".getcwd()." -iname \"*.jp*g\" -o -iname \"*.png\" -o -iname \"*gif\"", $result);
-shuffle($result);
+
 # No use making a slideshow if there is only 1 or no image.
 if (count($result) == 0) {
    echo "No images found in ".getcwd()."\n";
@@ -41,6 +41,9 @@ if (count($result) == 1) {
    echo "Cannot make a slideshow.\n";
    exit;
 }
+
+# randomize the results
+shuffle($result);
 
 # Make the slide show
 
@@ -67,11 +70,10 @@ foreach ($result as &$value) {
 tail($file);
  
 # Close the file
-   fclose( $file );
+fclose( $file );
 
 echo "Slideshow ".$fileout." created containing ".count($result)." images.\n"; 
 exit;
-
 
 # Write the startdate section
 function heading($file) {
