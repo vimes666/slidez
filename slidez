@@ -1,0 +1,110 @@
+#!/usr/bin/php   
+<?php
+##############################################################################################
+# 
+# This script generates a slideshow.xml file in a folder with images to be used as desktop
+# background slideshow in linux mint mate.
+# 
+# installation:
+#   - rename the script if you do not like the name (I am using 'slidez' without .php in this
+#     example)
+#   - copy this file to /usr/local/bin (sudo cp slidez /usr/local/bin/slidez)
+#   - make the file executable if necessary (sudo chmod +x slidez)
+#
+# usage:
+#   - in a terminal, go to your image folder (with cd) and type slidez 
+#   - right-click the desktop background and click 'change desktop background'
+#   - click 'Add...'
+#   - select 'All files' on the pulldown button that says 'Images' (above the open button)
+#   - enter your images folder in the location field
+#   - select the file slideshow.xml and click open.
+#   - done
+#
+# Created by vimes666 @ Datasmid 2019.
+#
+################################################################################################
+
+$cnt = 0;
+$fileout = getcwd()."/slideshow.xml";
+
+# Make array from LS output. We do not need error msgs. 
+exec("find ".getcwd()." -iname \"*.jp*g\" -o -iname \"*.png\" -o -iname \"*gif\"", $result);
+shuffle($result);
+# No use making a slideshow if there is only 1 or no image.
+if (count($result) == 0) {
+   echo "No images found in ".getcwd()."\n";
+   echo "Cannot make a slideshow.\n";
+   exit;
+}
+if (count($result) == 1) {
+   echo "Only 1 image found in ".getcwd()."\n";
+   echo "Cannot make a slideshow.\n";
+   exit;
+}
+
+# Make the slide show
+
+# open the file
+$file = fopen($fileout, "w");
+
+# first write the startdate
+heading($file);
+
+# Process all filenames
+foreach ($result as &$value) {
+   echo "Processing ".$value."\n";
+   if ($cnt == 0) {
+      statik($file, $result, $cnt);
+   } 
+   else {
+      transition($file, $result, $cnt);
+      statik($file, $result, $cnt);
+   }
+   $cnt ++;
+}  
+
+# Make the last line
+tail($file);
+ 
+# Close the file
+   fclose( $file );
+
+echo "Slideshow ".$fileout." created containing ".count($result)." images.\n"; 
+exit;
+
+
+# Write the startdate section
+function heading($file) {
+   fwrite( $file, "<background>\r\n");
+   fwrite( $file, "  <starttime>\r\n");
+   fwrite( $file, "    <year>2000</year>\r\n");
+   fwrite( $file, "    <month>01</month>\r\n");
+   fwrite( $file, "    <day>01</day>\r\n");
+   fwrite( $file, "    <hour>00</hour>\r\n");
+   fwrite( $file, "    <minute>00</minute>\r\n");
+   fwrite( $file, "    <second>00</second>\r\n");
+   fwrite( $file, "  </starttime>\r\n");
+}
+
+# Write the static section
+function statik($file, $result, $cnt) {
+   fwrite( $file, "  <static>\r\n");
+   fwrite( $file, "    <duration>57.0</duration>\r\n");
+   fwrite( $file, "    <file>".$result[$cnt]."</file>\r\n");
+   fwrite( $file, "  </static>\r\n");
+} 
+
+# Write the transition section
+function transition($file, $result, $cnt) {
+   fwrite( $file, "  <transition>\r\n");
+   fwrite( $file, "    <duration>3.0</duration>\r\n");
+   fwrite( $file, "    <from>".$result[$cnt-1]."</from>\r\n");
+   fwrite( $file, "    <to>".$result[$cnt]."</to>\r\n");
+   fwrite( $file, "  </transition>\r\n");
+}
+# Write the tail line
+function tail($file) {
+   fwrite( $file, "</background>\r\n");
+}
+
+?>
