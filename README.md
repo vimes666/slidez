@@ -2,7 +2,7 @@
 
 ## Slideshow generator for linux mint mate desktop background.
 
-__ this script is no longer maintained, use [lmm-slidez!](https://github.com/vimes666/lmm-slidez) instead.__
+__this script is no longer maintained, use [lmm-slidez](https://github.com/vimes666/lmm-slidez) instead.__
 
 This PHP script generates an XML file that can be used as a background slideshow in the linux mint mate desktop. It __recursively__ collects the names of all image files that are present in the directory from where the script is invoked. 
 
